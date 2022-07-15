@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ReportMain extends StatefulWidget {
   const ReportMain({Key? key}) : super(key: key);
@@ -8,24 +9,9 @@ class ReportMain extends StatefulWidget {
 }
 
 class _ReportMainState extends State<ReportMain> {
-  static final _mainColor = Color(0xff557ae5);
   
   @override
   Widget build(BuildContext contetx) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: 200,
-          color: _mainColor,
-          child: Column(
-            children: const[
-              Text('하이')
-            ],
-          )
-        ),
-      ],
-    );
+    return Text('리포트 메인');
   }
 }

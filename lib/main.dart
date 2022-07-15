@@ -1,10 +1,17 @@
 import 'package:clone_readnumber_app/screen/calendar/calendar_main.dart';
+import 'package:clone_readnumber_app/screen/main/screen_main.dart';
 import 'package:clone_readnumber_app/screen/payroll/payroll_main.dart';
 import 'package:clone_readnumber_app/screen/report/report_main.dart';
 import 'package:clone_readnumber_app/screen/settings/settings_main.dart';
 import 'package:clone_readnumber_app/screen/transactiion_history/transaction_history_main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'consts/const_properties.dart';
 
 void main() {
   runApp(const MyApp());
@@ -118,76 +125,66 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading : false,  // 뒤로가기 버튼 제거
-        backgroundColor: _mainColor,
-        elevation: 0,
-        title: Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold,),),
-        actions: <Widget>[
-          Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 0.0,
-                  vertical: 10.0,
+    return ScreenUtilInit(
+        // 스크린 사이즈 대응
+        designSize: Size(360, 690),
+        builder: (ctx, child) {
+          return MaterialApp(
+            builder: (context, child) => MediaQuery(data: MediaQuery.of(context).copyWith(
+              textScaleFactor: 1.0,
+              boldText: false,
+            ),
+              child: child!,
+            ),
+            title: '리드넘버',
+            debugShowCheckedModeBanner: false,  // 디버그 배너 표시 유무
+            localizationsDelegates: const[
+              // ... 앱 별 Localization Delegate를 여기에 정의(앱국제화)
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            theme: ThemeData(
+              fontFamily: 'Noto',
+              hintColor: const Color(0xff808080),
+              textTheme: TextTheme(
+                headline1: TextStyle(
+                  color: primaryBlackColor,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
                 ),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10.0,
-                  vertical: 5.0,
-                ),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Color(0xff557ae5),
-                    borderRadius: BorderRadius.circular(10.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.25),
-                        offset: Offset(0.0, 2.0),
-                        blurRadius: 5.0
-                      ),
-                    ],
-                  ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/images/ic_chat.svg',
-                      width: 24.0,
-                      height: 24.0,
-                      color: Colors.white,
-                    ),
-                    const SizedBox(width: 5.0),
-                    const Text(
-                      '채팅상담',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+                bodyText1: TextStyle(
+                  color: primaryBlackColor,
+                  fontSize: 14.0,
                 ),
               ),
-            ],
-          ),
-          SizedBox(width: 20.0),
-        ],
-      ),
-      body: pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Color(0xff2962ff),
-        selectedFontSize: 12.0,
-        unselectedItemColor: Color(0xff222222),
-        unselectedFontSize: 12.0,
-        currentIndex: _selectedIndex,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-        items: bottomItems,
-      ),
+              appBarTheme: const AppBarTheme(
+                color: Colors.white,
+                titleTextStyle: TextStyle(color: Colors.black),
+                elevation: 0.0,
+                textTheme: TextTheme(
+                  headline6: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18.0,
+                  ),
+                ),
+                iconTheme: IconThemeData(color: Colors.black),
+                actionsIconTheme: IconThemeData(color: Colors.black),
+                systemOverlayStyle: SystemUiOverlayStyle.light,
+              ),
+              scaffoldBackgroundColor: Colors.white,
+              cupertinoOverrideTheme: CupertinoTheme.of(context).copyWith(
+                brightness: Brightness.light,
+              ),
+              highlightColor: const Color(0xfff8f8f8),
+              splashColor: const Color(0xfff8f8f8),
+            ),
+            initialRoute: '/',
+            routes: {
+              '/': (context) => const ScreenMain(),
+            },
+          );
+        }
     );
   }
 }
