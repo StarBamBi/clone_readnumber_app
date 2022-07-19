@@ -14,23 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'consts/const_properties.dart';
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: '상호명'),
-    );
-  }
+  runApp(const MyHomePage(title: '리드넘버',));
 }
 
 class MyHomePage extends StatefulWidget {
@@ -130,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
         designSize: Size(360, 690),
         builder: (ctx, child) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,  // 디버그 배너 표시 유무
             builder: (context, child) => MediaQuery(data: MediaQuery.of(context).copyWith(
               textScaleFactor: 1.0,
               boldText: false,
@@ -137,7 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
               child: child!,
             ),
             title: '리드넘버',
-            debugShowCheckedModeBanner: false,  // 디버그 배너 표시 유무
             localizationsDelegates: const[
               // ... 앱 별 Localization Delegate를 여기에 정의(앱국제화)
               GlobalMaterialLocalizations.delegate,
